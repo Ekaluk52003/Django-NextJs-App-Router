@@ -8,6 +8,7 @@ NextJS 14 can call Django backend including session authentication
 ```bash
 # clone repo
 git clone https://github.com/Ekaluk52003/Django_NextJs_app_router.git
+cd Django_NextJs_app_router
 ```
 ### Start Django
 ```bash
