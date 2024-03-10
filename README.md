@@ -1,8 +1,8 @@
 
 ## Django Next JS(App router)
 
-This repo is created for people who wanna use NextJS 14 with (App router).
-NextJS 14 can call Django backend including session authentication
+This repo is created for people who wanna use NextJS 14 with (App router) to fetch API
+from Django backend. This repo provide simple authentication via Django Session.
 
 ### Clone Repo
 ```bash
@@ -36,8 +36,9 @@ npm i
 npm run dev
 ```
 
-### Feature
+### Highlighs
 - Example of Next JS using server action with Django. No Usestate or Useeffect
 - Django Backed use package called Django Ninja instead of Django Rest Framework
-- Django API is rewrite from http://127.0.0.1:8000/api to http://localhost:3000/api. Pls check find next.config.js
-- No Cor Header is needed due to rewrite 
+- Django API is rewrite from http://127.0.0.1:8000/api to http://localhost:3000/api. Pls check find **next.config.js**
+- No Cor Header is needed due to rewrite
+- CSRF is set using Next Js middlewear. Please check **middleware.ts**
