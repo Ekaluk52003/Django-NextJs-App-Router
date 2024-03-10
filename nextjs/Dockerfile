@@ -14,7 +14,7 @@ RUN \
 
 COPY src ./src
 COPY public ./public
-COPY next.config.mjs .
+COPY next.config.js .
 COPY postcss.config.js .
 COPY tailwind.config.ts .
 COPY tsconfig.json .

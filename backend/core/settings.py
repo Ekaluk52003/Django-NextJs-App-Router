@@ -14,7 +14,7 @@ SECRET_KEY = '0=)hcqd@5c2+=tr+f!^o$(y2ujm6ot5=yv1woyi!etfjs^ma_-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['172.18.0.2','localhost','127.0.0.1']
 
 AUTH_USER_MODEL = "ninjaauth.CustomUser"
 
