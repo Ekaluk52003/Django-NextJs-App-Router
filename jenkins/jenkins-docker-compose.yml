@@ -1,0 +1,84 @@
+# Concept for deployment
+# We need to run container for Jenkins Master and Jenkins Agent(Slave)
+# To deploy , we will create jenkind code pipeline from Jenkins Master.
+# jenkins code pipeline will follow instuction from Jenkinsfile
+# When deploy we should use Jenkins Agent(Slave).
+# When start deployment, jenkins will clone repo to below.
+# mill@django:~/jnlp_slave/workspace/django
+
+
+# Step to being
+# 1. Set up docker in VPS
+# 2. Install docker, docker-compose
+#Install docker compose
+# curl -SL https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+# make 2 directory
+# mkdir -p ~/{jenkins,jnlp_slave}
+
+
+# Optional
+# docker run -d \
+# 	-u root \
+# 	--name=jenkins \
+# 	-e TZ=America/Denver \
+# 	-v /var/run/docker.sock:/var/run/docker.sock \
+# 	-v $(which docker):/usr/bin/docker \
+# 	-v $HOME/jenkins:/var/jenkins_home \
+# 	-p 127.0.0.1:2345:2345 \
+# 	-p 8080:8080 \
+# 	-p 50000:50000 \
+# 	 jenkins/jenkins:lts
+
+# 3 Set up Jenkins Master
+# cd ~/jenkins
+# nano jenkins-master-docker-compose.yml
+# docker-compose -f jenkins-master-docker-compose.yml up -d
+jenkins_master:
+  image: jenkins/jenkins:lts
+  container_name: jenkins
+  user: root
+  environment:
+    - TZ=America/Denver
+  restart: always
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/bin/docker:/usr/bin/docker
+    - $HOME/jenkins:/var/jenkins_home
+  ports:
+    - 127.0.0.1:2345:2345
+    - 8080:8080
+    - 50000:50000
+
+# 4. JENKINS MASTER CONFIG
+
+# jenkins > manage jenkins > manage nodes > new node
+# node name > permanent agent
+# executors: 1
+# remote root: /var/jenkins_home
+# defaults for rest
+# select node from nodes list to get java launch opts w/secret hash
+
+# 5 Check  "IPAddress": "172.17.0.2",
+# docker inspect jenkin_container_id
+# 6 Run Jengins Slave/Agent
+# example
+# docker run jenkins/jnlp-slave -url http://192.168.8.113:8080 <secret> <jenkins_slave_name>
+# docker run jenkins/jnlp-slave -url http://172.17.0.2:8080 xxxxxxxxxxxxx Agent1
+
+
+
+# slave docker compose
+# cd ~/jnlp_slave
+# docker-compose -f jenkins-slave-docker-compose.yml up -d
+jenkins_slave:
+  image: jenkins/jnlp-slave
+  container_name: jnlp_slave
+  user: root
+  command: -url http://172.17.0.2:8080 xxxxxxxxxxxxx Agent1
+  restart: always
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/bin/docker:/usr/bin/docker
+    - $HOME/jnlp_slave:/var/jenkins_home
+
+# 7 Setup code pipline and Jenkinfile with label Agent1
