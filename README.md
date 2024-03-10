@@ -16,14 +16,17 @@ cd Django_NextJs_app_router
 cd backend
 # create venv
 py -m venv myenv
-# create venv
+# Activate myenv
 myenv\Scripts\activate
 # install python package
 pip install -r requirements.txt
-# Start Django server
-py manage.py runserver
+# Make migration for SQlite
+py manage.py makemigrations
 # Don't forget to create user so to test login
 py manage.py createsuperuser
+# Start Django server
+py manage.py runserver
+
 ```
 ### Start NextJs
 ```bash
@@ -33,4 +36,5 @@ npm i
 npm run dev
 ```
 
-### Start Django
+### Feature
+

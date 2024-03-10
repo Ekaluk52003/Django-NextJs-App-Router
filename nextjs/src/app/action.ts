@@ -4,15 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 import setCookie from 'set-cookie-parser'
 import { redirect } from "next/navigation";
 
-export async function login(formData: FormData) {
+
+export async function login(
+  prevState: {
+    message: string;
+  },
+  formData: FormData,
+) {
+
+  const email = formData.get('email')
+  const password = formData.get('password')
 
   const csrf = cookies().get('csrftoken')?.value
-
-
-  var raw = JSON.stringify({
-    "email": "ekaluk.p@gmail.com",
-    "password": "Eka@50915"
-  });
 
   const res = await fetch("http://localhost:3000/api/auth/login", {
     method: 'POST',
@@ -21,24 +24,22 @@ export async function login(formData: FormData) {
       "X-CSRFToken":csrf!,
       Cookie: cookies().toString(),
     },
-    body:raw
+    body:JSON.stringify({
+      "email": email,
+      "password": password
+    })
 
   })
 
   const cookie = res.headers.get("set-cookie")
 
   if(!cookie) {
-    return
+    return { message: 'incorrect credentials'};
   }
-
-  // const destinationUrl = new URL("/home", new URL(request.url).origin);
-  // const response = NextResponse.redirect(destinationUrl, { status: 302 });
 
 
   const parsedResponseCookies = setCookie.parse(setCookie.splitCookiesString(cookie))
   const sessionIdCookie = parsedResponseCookies.find((cookie) => cookie.name === 'sessionid')
-
-  // Create the headers that will need to be returned to the browser. These headers are needed for every subsequent request that require authentication.
 
   if (!sessionIdCookie) {
     // No `sessionid` cookie in the fetch response means something went wrong.
@@ -60,16 +61,8 @@ export async function login(formData: FormData) {
   // response.headers.set('set-cookie', cookie!)
 
 
-  return {
 
-    status :"ok"
-  }
-
-  // if ( res.ok ) {
-  //   redirect ('/home')
-  // }
-
-  // return response
+    return { message: 'you are logging in'};
 
 
 
@@ -88,7 +81,7 @@ export async function logout(formData: FormData) {
     },
   })
   cookies().delete('sessionid')
-  return 
+  return
 }
 
 
