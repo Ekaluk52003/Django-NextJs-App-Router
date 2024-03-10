@@ -37,5 +37,7 @@ npm run dev
 ```
 
 ### Feature
-- Example of Next JS using server action with Django
+- Example of Next JS using server action with Django. No Usestate or Useeffect
 - Django Backed use package called Django Ninja instead of Django Rest Framework
+- Django API is rewrite from http://127.0.0.1:8000/api to http://localhost:3000/api. Pls check find next.config.js
+- No Cor Header is needed due to rewrite 
