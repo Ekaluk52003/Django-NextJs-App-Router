@@ -37,4 +37,5 @@ npm run dev
 ```
 
 ### Feature
-
+- Example of Next JS using server action with Django
+- Django Backed use package called Django Ninja instead of Django Rest Framework
