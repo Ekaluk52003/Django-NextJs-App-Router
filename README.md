@@ -21,5 +21,15 @@ myenv\Scripts\activate
 pip install -r requirements.txt
 # Start Django server
 py manage.py runserver
-
+# Don't forget to create user so to test login
+py manage.py createsuperuser
 ```
+### Start NextJs
+```bash
+# Cd to nextjs
+cd nextjs
+npm i
+npm run dev
+```
+
+### Start Django
