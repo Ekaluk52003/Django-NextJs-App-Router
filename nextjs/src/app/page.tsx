@@ -10,11 +10,9 @@ export default function Home() {
           </h1>
           <p className='lg:w-2/3 mx-auto leading-relaxed text-base'>
             If you are someone who do not want to leave Django behind but still
-            want to use latest Tech Frontend Javascript NextJs.
+            want to use latest Tech Frontend.
           </p>
-          <p className='lg:w-2/3 mx-auto leading-relaxed text-base'>
-            Docker included.
-          </p>
+
           <Link href='/login'>
             <button className='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'>
               Try to login

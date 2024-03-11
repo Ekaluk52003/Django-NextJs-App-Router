@@ -17,7 +17,7 @@ export async function login(
 
   const csrf = cookies().get('csrftoken')?.value
 
-  const res = await fetch("http://localhost:3000/api/auth/login", {
+  const res = await fetch(`${process.env.FRONTEND_URL}/api/auth/login`, {
     method: 'POST',
     credentials: 'same-origin',
     headers:  {
@@ -71,7 +71,7 @@ export async function login(
 
 export async function logout(formData: FormData) {
 
-  await fetch("http://127.0.0.1:3000/api/auth/logout", {
+  await fetch(`${process.env.FRONTEND_URL}/api/auth/logout`, {
     method:"DELETE",
     credentials: "same-origin",
     headers: {
@@ -86,7 +86,7 @@ export async function logout(formData: FormData) {
 
 
 export async function getSession() {
-  const res = await fetch("http://localhost:3000/api/auth/me", {
+  const res = await fetch(`${process.env.FRONTEND_URL}/api/auth/me`, {
     headers: {
       "Content-Type": "application/json",
       Cookie: cookies().toString(),
@@ -103,7 +103,7 @@ export async function getSession() {
 }
 
 export async function isLogin() {
-  const res = await fetch("http://localhost:3000/api/auth/me", {
+  const res = await fetch(`${process.env.FRONTEND_URL}/api/auth/me`, {
     headers: {
       "Content-Type": "application/json",
       Cookie: cookies().toString(),

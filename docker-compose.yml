@@ -2,6 +2,16 @@ version: '3.8'
 
 services:
 
+  db:
+    image: postgres:15-alpine
+    volumes:
+     #name volume
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
+
   backend:
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
@@ -12,17 +22,18 @@ services:
     #bind mount volume
       - ./backend:/usr/src/app
       - staticfiles:/usr/src/app/staticfiles
+    env_file:
+      - ./backend/.env.dev
     ports:
       - 8000:8000
-
+    depends_on:
+      - db
 
   nextjs:
     stdin_open: true
     build:
       context: ./nextjs
-
     volumes:
-
       - ./nextjs/src:/app/src
       - ./nextjs/public:/app/public
     ports:
@@ -32,6 +43,8 @@ services:
       # - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
       # - NODE_ENV=development
+    env_file:
+      - ./nextjs/.env.local
     depends_on:
       - backend
 
@@ -42,3 +55,4 @@ services:
 
 volumes:
   staticfiles:
+  postgres_data:

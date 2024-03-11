@@ -49,12 +49,6 @@ def login(request, data: LoginIn):
     return 403, None
 
 
-# @router.post("/csrf", tags=_TGS)
-# @ensure_csrf_cookie
-# @csrf_exempt
-# def get_csrf_token(request):
-#     return HttpResponse()
-
 @router.post("/get-csrf")
 @ensure_csrf_cookie
 @csrf_exempt
@@ -90,7 +84,7 @@ def request_password_reset(request, data: RequestPasswordResetIn):
                 plaintext = template.loader.get_template(
                     'registration/password_reset_email.txt')
                 htmltemp = template.loader.get_template(
-                    'registration/email.html')
+                    'auth/email.html')
                 c = {
                     "email": user.email,
                     'domain': settings.FRONTEND_URL,
